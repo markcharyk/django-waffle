@@ -295,6 +295,11 @@ behavior.
     ever upgrade and change the shape of the objects (for example
     upgrading from <0.7.5 to >0.7.5) you'll want to set this to
     something other than ``'waffle:'``.
+``WAFFLE_TESTING_COOKIE``:
+    Waffle allows specialized A/B testing on a per-flag basis. This
+    requires setting a cookie. You can customize the cookie name here.
+    Like ``WAFFLE_COOKIE`` it must contain ``%s``. By default it is
+    ``dwft_%s``.
 
 
 .. _overriding-flags:
@@ -309,8 +314,10 @@ or you can enable it per-flag with Testing property.
 This only works for flags---Switches cannot be overridden at this
 time.
 
+See the :ref:`testing chapter <testing-chapter>` for more detail.
+
 The querystring parameter will be ``dwft_<name_of_flag>``. For
-example, if I have a flag named "ab_testing", then I can override the
+example, if I have a flag named "ab-testing", then I can override the
 setting with these urls:
 
 * http://example.com/?dwft_ab_testing=0 -- Off
