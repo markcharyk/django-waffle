@@ -159,8 +159,8 @@ def cache_flag(**kwargs):
     if not action or action in ['post_add', 'post_remove', 'post_clear']:
         f = kwargs.get('instance')
         cache.add(keyfmt(FLAG_CACHE_KEY, f.name), f)
-        cache.add(keyfmt(FLAG_USERS_CACHE_KEY, f.name), f.users.all())
-        cache.add(keyfmt(FLAG_GROUPS_CACHE_KEY, f.name), f.groups.all())
+        cache.add(keyfmt(FLAG_USERS_CACHE_KEY, f.name), list(f.users.all()))
+        cache.add(keyfmt(FLAG_GROUPS_CACHE_KEY, f.name), list(f.groups.all()))
 
 
 def uncache_flag(**kwargs):
