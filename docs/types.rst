@@ -12,6 +12,9 @@ are **not**. Consequently, Flags are much more complicated, while
 Switches are just a named boolean in the database, and Samples are
 just a percentage stored in the database.
 
+Flags, Switches, and Samples can be managed via the `command line
+<cli-chapter>`_.
+
 
 Flags
 -----

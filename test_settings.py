@@ -7,13 +7,13 @@ path = lambda *a: os.path.join(ROOT, *a)
 DEBUG = True
 TEMPLATE_DEBUG = True
 
+TEST_RUNNER = 'django_nose.runner.NoseTestSuiteRunner'
+
 JINJA_CONFIG = {}
 
 SITE_ID = 1
 
 SECRET_KEY = 'foobar'
-
-TEST_RUNNER = 'django_nose.runner.NoseTestSuiteRunner'
 
 DATABASES = {
     'default': {
@@ -42,6 +42,17 @@ MIDDLEWARE_CLASSES = (
 )
 
 ROOT_URLCONF = 'test_app.urls'
+
+TEMPLATE_LOADERS = (
+    'jingo.Loader',
+    'django.template.loaders.filesystem.Loader',
+    'django.template.loaders.app_directories.Loader',
+)
+
+JINGO_EXCLUDE_APPS = (
+    'django',
+    'waffle',
+)
 
 TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.auth.context_processors.auth',

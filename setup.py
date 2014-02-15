@@ -2,14 +2,14 @@ from setuptools import setup, find_packages
 
 setup(
     name='django-waffle',
-    version='0.9.1',
+    version='0.9.2',
     description='A feature flipper for Django.',
     long_description=open('README.rst').read(),
     author='James Socol',
     author_email='james.socol@gmail.com',
     url='http://github.com/jsocol/django-waffle',
     license='BSD',
-    packages=find_packages(exclude=['test_app']),
+    packages=find_packages(exclude=['test_app', 'test_settings']),
     include_package_data=True,
     package_data={'': ['README.rst']},
     zip_safe=False,
