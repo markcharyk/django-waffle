@@ -9,3 +9,5 @@ dist
 .pydevproject
 .settings
 docs/_*
+.idea/
+.tox/
