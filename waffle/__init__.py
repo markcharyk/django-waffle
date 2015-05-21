@@ -158,9 +158,9 @@ def cache_flag(**kwargs):
     # action is included for m2m_changed signal. Only cache on the post_*.
     if not action or action in ['post_add', 'post_remove', 'post_clear']:
         f = kwargs.get('instance')
-        cache.add(keyfmt(FLAG_CACHE_KEY, f.name), f)
-        cache.add(keyfmt(FLAG_USERS_CACHE_KEY, f.name), list(f.users.all()))
-        cache.add(keyfmt(FLAG_GROUPS_CACHE_KEY, f.name), list(f.groups.all()))
+        cache.add(keyfmt(FLAG_CACHE_KEY, f.name), f, None)
+        cache.add(keyfmt(FLAG_USERS_CACHE_KEY, f.name), list(f.users.all()), None)
+        cache.add(keyfmt(FLAG_GROUPS_CACHE_KEY, f.name), list(f.groups.all()), None)
 
 
 def uncache_flag(**kwargs):
@@ -183,7 +183,7 @@ m2m_changed.connect(uncache_flag, sender=Flag.groups.through,
 
 def cache_sample(**kwargs):
     sample = kwargs.get('instance')
-    cache.add(keyfmt(SAMPLE_CACHE_KEY, sample.name), sample)
+    cache.add(keyfmt(SAMPLE_CACHE_KEY, sample.name), sample, None)
 
 
 def uncache_sample(**kwargs):
@@ -198,7 +198,7 @@ post_delete.connect(uncache_sample, sender=Sample,
 
 def cache_switch(**kwargs):
     switch = kwargs.get('instance')
-    cache.add(keyfmt(SWITCH_CACHE_KEY, switch.name), switch)
+    cache.add(keyfmt(SWITCH_CACHE_KEY, switch.name), switch, None)
 
 
 def uncache_switch(**kwargs):
