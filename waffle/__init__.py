@@ -5,6 +5,7 @@ import hashlib
 from django.conf import settings
 from django.core.cache import cache
 from django.db.models.signals import post_save, post_delete, m2m_changed
+from django.core.cache.backends.base import DEFAULT_TIMEOUT
 
 from waffle.models import Flag, Sample, Switch
 
@@ -24,6 +25,7 @@ SWITCH_CACHE_KEY = 'switch:%s'
 SWITCHES_ALL_CACHE_KEY = 'switches:all'
 COOKIE_NAME = getattr(settings, 'WAFFLE_COOKIE', 'dwf_%s')
 TEST_COOKIE_NAME = getattr(settings, 'WAFFLE_TESTING_COOKIE', 'dwft_%s')
+WAFFLE_CACHE_TIMEOUT = getattr(settings, 'WAFFLE_CACHE_TIMEOUT', DEFAULT_TIMEOUT)
 
 
 def keyfmt(k, v=None):
@@ -158,9 +160,9 @@ def cache_flag(**kwargs):
     # action is included for m2m_changed signal. Only cache on the post_*.
     if not action or action in ['post_add', 'post_remove', 'post_clear']:
         f = kwargs.get('instance')
-        cache.add(keyfmt(FLAG_CACHE_KEY, f.name), f, None)
-        cache.add(keyfmt(FLAG_USERS_CACHE_KEY, f.name), list(f.users.all()), None)
-        cache.add(keyfmt(FLAG_GROUPS_CACHE_KEY, f.name), list(f.groups.all()), None)
+        cache.add(keyfmt(FLAG_CACHE_KEY, f.name), f, WAFFLE_CACHE_TIMEOUT)
+        cache.add(keyfmt(FLAG_USERS_CACHE_KEY, f.name), list(f.users.all()), WAFFLE_CACHE_TIMEOUT)
+        cache.add(keyfmt(FLAG_GROUPS_CACHE_KEY, f.name), list(f.groups.all()), WAFFLE_CACHE_TIMEOUT)
 
 
 def uncache_flag(**kwargs):
@@ -183,7 +185,7 @@ m2m_changed.connect(uncache_flag, sender=Flag.groups.through,
 
 def cache_sample(**kwargs):
     sample = kwargs.get('instance')
-    cache.add(keyfmt(SAMPLE_CACHE_KEY, sample.name), sample, None)
+    cache.add(keyfmt(SAMPLE_CACHE_KEY, sample.name), sample, WAFFLE_CACHE_TIMEOUT)
 
 
 def uncache_sample(**kwargs):
@@ -198,7 +200,7 @@ post_delete.connect(uncache_sample, sender=Sample,
 
 def cache_switch(**kwargs):
     switch = kwargs.get('instance')
-    cache.add(keyfmt(SWITCH_CACHE_KEY, switch.name), switch, None)
+    cache.add(keyfmt(SWITCH_CACHE_KEY, switch.name), switch, WAFFLE_CACHE_TIMEOUT)
 
 
 def uncache_switch(**kwargs):
