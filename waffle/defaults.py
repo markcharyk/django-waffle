@@ -1,5 +1,9 @@
 from __future__ import unicode_literals
-from django.core.cache.backends.base import DEFAULT_TIMEOUT
+
+try:
+    from django.core.cache.backends.base import DEFAULT_TIMEOUT
+except ImportError:
+    DEFAULT_TIMEOUT = 300
 
 
 COOKIE = 'dwf_%s'
