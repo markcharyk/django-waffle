@@ -1,4 +1,5 @@
 from __future__ import unicode_literals
+from django.core.cache.backends.base import DEFAULT_TIMEOUT
 
 
 COOKIE = 'dwf_%s'
@@ -15,6 +16,7 @@ SAMPLE_CACHE_KEY = 'sample:%s'
 ALL_SAMPLES_CACHE_KEY = 'samples:all'
 SWITCH_CACHE_KEY = 'switch:%s'
 ALL_SWITCHES_CACHE_KEY = 'switches:all'
+CACHE_TIMEOUT = DEFAULT_TIMEOUT
 
 FLAG_DEFAULT = False
 SAMPLE_DEFAULT = False
